@@ -1,0 +1,28 @@
+ZEBA · Aplicacions digitals a mida per a empreses (web)
+========================================================
+
+COM PENJAR-HO
+-------------
+1. Descomprimeix aquest ZIP. Has de mantenir l'estructura tal qual:
+     index.html
+     /fonts   (tipografies Avant Garde + Gentona)
+     /assets  (imatges, logo i vídeo)
+2. Puja la carpeta sencera al teu hosting, p. ex. a:
+     zeba.cat/aplicacions/
+   L'enllaç per compartir serà:  https://zeba.cat/aplicacions/
+   (el servidor obre index.html automàticament)
+
+També funciona tal qual a Vercel, Netlify o Railway: arrossega la carpeta.
+
+ENLLAÇOS JA POSATS
+------------------
+- Reports comercials  -> https://zebaproduccions.github.io/report-visites/demo.html
+- Catàleg digital     -> https://zeba.cat/cataleg-digital-exemple/
+- Family Day          -> https://www.transgourmet.es/family-day-2026/
+- Animacions IA       -> el vídeo es reprodueix sol (sense botó)
+
+NOTA SOBRE LES TIPOGRAFIES
+--------------------------
+S'inclouen ITC Avant Garde Gothic i Gentona en format web (.woff2).
+Assegura't que la teva llicència cobreix l'ús com a webfont (la
+llicència d'escriptori no sempre l'inclou).
