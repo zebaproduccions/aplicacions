@@ -55,7 +55,7 @@ body{
 .slide{
   min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;
   position:relative;display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(56px,9vh,110px) var(--pad-x);overflow:hidden;
+  padding:clamp(80px,11vh,130px) var(--pad-x) clamp(56px,9vh,100px);overflow:hidden;
 }
 .inner{width:100%;max-width:var(--maxw);margin:0 auto}
 
@@ -158,6 +158,65 @@ p{line-height:1.6}
 .stackwrap[data-front="before"] .cap-before,
 .stackwrap[data-front="after"] .cap-after{display:block}
 
+/* ════════ Stack sense capes / tags (variant ERP) ════════ */
+.stack.plain .stk img{box-shadow:0 30px 60px -24px rgba(34,26,77,.55)}
+/* Front (calendari) més gran que back (projectes) */
+.stack.plain .stk{height:74%}
+.stackwrap[data-front="before"] .stack.plain .stk-before,
+.stackwrap[data-front="after"]  .stack.plain .stk-after{
+  transform:translate(-50%,-50%) translateX(-12%) scale(1.08);
+}
+.stackwrap[data-front="before"] .stack.plain .stk-after,
+.stackwrap[data-front="after"]  .stack.plain .stk-before{
+  transform:translate(-50%,-50%) translateX(30%) translateY(-10%) scale(.7);
+}
+
+/* ════════ Barra de navegació superior ════════ */
+.topnav{
+  position:fixed;top:0;left:0;right:0;z-index:55;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(20px,4vw,42px);
+  background:rgba(240,238,234,.78);backdrop-filter:saturate(140%) blur(14px);
+  -webkit-backdrop-filter:saturate(140%) blur(14px);
+  border-bottom:1px solid rgba(34,26,77,.06);
+  transition:background .35s var(--ease), border-color .35s var(--ease);
+}
+.topnav.on-dark{background:rgba(34,26,77,.55);border-bottom-color:rgba(255,255,255,.08)}
+.topnav .nav-logo{display:flex;align-items:center;text-decoration:none}
+.topnav .nav-logo img{height:26px;width:auto;display:block;transition:opacity .35s var(--ease)}
+.topnav .nav-logo .l-flame{display:block}
+.topnav .nav-logo .l-white{display:none}
+.topnav.on-dark .nav-logo .l-flame{display:none}
+.topnav.on-dark .nav-logo .l-white{display:block}
+.topnav ul{list-style:none;display:flex;gap:clamp(18px,2.4vw,34px);margin:0;padding:0}
+.topnav a.nav-link{
+  font-family:var(--font-display);font-weight:500;font-size:14px;
+  color:var(--mari);text-decoration:none;letter-spacing:.01em;
+  padding:6px 2px;border-bottom:2px solid transparent;
+  transition:color .25s var(--ease), border-color .25s var(--ease);
+}
+.topnav a.nav-link:hover{color:var(--flama)}
+.topnav a.nav-link.active{color:var(--flama);border-bottom-color:var(--flama)}
+.topnav.on-dark a.nav-link{color:rgba(255,255,255,.85)}
+.topnav.on-dark a.nav-link:hover,
+.topnav.on-dark a.nav-link.active{color:#fff;border-bottom-color:#fff}
+.nav-burger{display:none;background:none;border:0;cursor:pointer;padding:8px}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--mari);margin:5px 0;transition:transform .3s var(--ease), opacity .3s var(--ease)}
+.topnav.on-dark .nav-burger span{background:#fff}
+
+/* ════════ Slide "Qui som" ════════ */
+.aboutgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,60px);align-items:center}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.about-stat{background:#fff;border-radius:14px;padding:22px 18px;text-align:center;border:1px solid rgba(34,26,77,.06)}
+.about-stat .n{font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2.6vw,32px);color:var(--flama);line-height:1.05;margin-bottom:8px;letter-spacing:-.01em}
+.about-stat .l{font-size:12px;letter-spacing:.06em;color:#544e74}
+.about-side{background:var(--mari);color:#fff;border-radius:18px;padding:clamp(28px,3.4vw,44px);position:relative;overflow:hidden}
+.about-side h3{font-family:var(--font-display);font-weight:700;font-size:clamp(20px,1.8vw,24px);margin-bottom:14px;color:#fff}
+.about-side p{font-size:clamp(14px,1.25vw,16px);color:rgba(255,255,255,.86);line-height:1.6;margin-bottom:12px}
+.about-side p strong{color:#fff;font-weight:700}
+.about-side .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.about-side .pill{font-family:var(--font-display);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.16)}
+
 /* ════════ Abans → Després (slide 5,6) ════════ */
 .beforeafter{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(16px,2.2vw,34px);align-items:center}
 .ba-arrow{font-size:30px;color:var(--flama);font-weight:700}
@@ -219,11 +278,24 @@ html.js .slide.in .reveal{opacity:1;transform:none}
 @media (max-width:860px){
   .cards.c3,.cards.c6{grid-template-columns:1fr 1fr}
   .compare,.split,.split.text-right,.two-shots,
-  .split.img-big,.split.img-big.right,.split.text-right.img-big{grid-template-columns:1fr}
+  .split.img-big,.split.img-big.right,.split.text-right.img-big,
+  .aboutgrid{grid-template-columns:1fr}
   .beforeafter{grid-template-columns:1fr}
   .stk{width:90%;height:auto}
   .stk img{width:100%;height:auto}
   .stack{height:clamp(220px,40vh,400px)}
+  .topnav ul{position:fixed;top:60px;left:0;right:0;flex-direction:column;gap:0;
+    background:var(--crema);border-bottom:1px solid rgba(34,26,77,.08);
+    max-height:0;overflow:hidden;transition:max-height .35s var(--ease);padding:0 clamp(20px,4vw,42px)}
+  .topnav.open ul{max-height:340px;padding:6px clamp(20px,4vw,42px) 18px}
+  .topnav.on-dark ul{background:var(--mari)}
+  .topnav ul li{border-top:1px solid rgba(34,26,77,.06)}
+  .topnav.on-dark ul li{border-top-color:rgba(255,255,255,.08)}
+  .topnav a.nav-link{display:block;padding:14px 0;font-size:15px}
+  .nav-burger{display:block}
+  .topnav.open .nav-burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .topnav.open .nav-burger span:nth-child(2){opacity:0}
+  .topnav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
   .ba-arrow{transform:rotate(90deg);justify-self:center}
   .slide{min-height:auto;padding-top:84px;padding-bottom:84px}
   .deck{scroll-snap-type:none}
@@ -247,14 +319,29 @@ html.js .slide.in .reveal{opacity:1;transform:none}
 <body>
 
 <div class="progress" id="progress"></div>
+
+<header class="topnav" id="topnav" aria-label="Navegació principal">
+  <a class="nav-logo" href="#portada" aria-label="Inici">
+    <img class="l-flame" src="assets/logo-zeba-flame.png" alt="Zeba">
+    <img class="l-white" src="assets/logo-zeba-white.png" alt="Zeba">
+  </a>
+  <button class="nav-burger" id="navBurger" aria-label="Obrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  <ul>
+    <li><a class="nav-link" href="#que-fem">Què fem</a></li>
+    <li><a class="nav-link" href="#exemples">Exemples</a></li>
+    <li><a class="nav-link" href="#projectes">Els nostres projectes</a></li>
+    <li><a class="nav-link" href="#qui-som">Qui som</a></li>
+    <li><a class="nav-link" href="#contacte">Contacte</a></li>
+  </ul>
+</header>
+
 <nav class="dots" id="dots" aria-label="Navegació de diapositives"></nav>
 
 <main class="deck" id="deck">
 
   <!-- ░░ 1 · PORTADA ░░ -->
-  <section class="slide cover" data-theme="dark" aria-label="Portada">
+  <section class="slide cover" id="portada" data-theme="dark" aria-label="Portada">
     <svg class="wave wave--anim" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true"></svg>
-    <div class="logo-wrap reveal"><img class="logo-img" src="assets/logo-zeba-white.png" alt="Zeba"></div>
     <div class="inner">
       <h1 class="reveal" style="--i:1">Aplicacions digitals<br>a mida per a empreses</h1>
       <p class="sub reveal" style="--i:2">Comunicació, criteri visual, intel·ligència artificial i desenvolupament amb codi al servei de processos concrets.</p>
@@ -264,7 +351,7 @@ html.js .slide.in .reveal{opacity:1;transform:none}
   </section>
 
   <!-- ░░ 2 · QUÈ FEM ░░ -->
-  <section class="slide" aria-label="Què fem">
+  <section class="slide" id="que-fem" aria-label="Què fem">
     <div class="inner">
       <p class="eyebrow reveal">Què fem</p>
       <h2 class="reveal" style="--i:1">Convertim processos en eines digitals útils</h2>
@@ -323,7 +410,7 @@ html.js .slide.in .reveal{opacity:1;transform:none}
   </section>
 
   <!-- ░░ 5 · EXCEL → VISUALITZACIÓ ░░ -->
-  <section class="slide" aria-label="De l'Excel a la visualització de dades">
+  <section class="slide" id="exemples" aria-label="De l'Excel a la visualització de dades">
     <div class="inner wide">
       <p class="eyebrow reveal">De l'Excel a la visualització de dades</p>
       <h2 class="reveal" style="--i:1">Les mateixes dades, una lectura molt més clara</h2>
@@ -414,15 +501,14 @@ html.js .slide.in .reveal{opacity:1;transform:none}
       <p class="eyebrow reveal">Eines internes per treballar millor</p>
       <h2 class="reveal" style="--i:1">Ens hem fet el nostre propi ERP</h2>
       <p class="lead reveal" style="--i:2">Tot el que proposem, primer ho apliquem a casa. Hem creat el nostre sistema de gestió amb una personalització total dels fluxos de treball: decidim exactament què passa quan es marca cada opció.</p>
-      <div class="two-shots">
-        <div class="reveal" style="--i:3">
-          <img class="shot" src="assets/erp-calendari.png" alt="Calendari general de produccions">
-          <p class="caption"><b>Calendari general</b> de produccions, rodatges i edicions.</p>
+      <div class="stackwrap reveal" id="stackwrap-erp" data-front="before" style="--i:3">
+        <div class="stack plain" id="stack-erp" role="button" tabindex="0" aria-label="Captures de l'ERP. Fes clic o prem Enter per canviar quina es veu al davant.">
+          <figure class="stk stk-before"><img src="assets/erp-calendari.png" alt="Calendari general de produccions"></figure>
+          <figure class="stk stk-after"><img src="assets/erp-projectes.png" alt="Gestió de projectes amb estats i progrés"></figure>
+          <span class="stk-hint" aria-hidden="true">Fes clic per veure-ho tot</span>
         </div>
-        <div class="reveal" style="--i:4">
-          <img class="shot" src="assets/erp-projectes.png" alt="Gestió de projectes amb estats i progrés">
-          <p class="caption"><b>Gestió de projectes</b> amb estats, progrés i clients en una sola vista.</p>
-        </div>
+        <p class="caption stk-cap cap-before"><b>Calendari general</b> de produccions, rodatges i edicions.</p>
+        <p class="caption stk-cap cap-after"><b>Gestió de projectes</b> amb estats, progrés i clients en una sola vista.</p>
       </div>
     </div>
   </section>
@@ -431,19 +517,19 @@ html.js .slide.in .reveal{opacity:1;transform:none}
   <section class="slide" aria-label="Eines de creació amb IA">
     <div class="inner wide">
       <p class="eyebrow reveal">Eines de creació amb IA</p>
-      <h2 class="reveal" style="--i:1">Animacions a partir d'un prompt</h2>
+      <h2 class="reveal" style="--i:1">Generem animacions a partir d'un text</h2>
       <div class="split img-big right" style="margin-top:10px">
         <div class="reveal" style="--i:2">
-          <p class="lead" style="margin-bottom:18px">Ens hem construït una eina que no existia: <strong>generar animacions escrivint una instrucció en text</strong>. La que tens al costat n'és un exemple, generada així.</p>
+          <p class="lead" style="margin-bottom:18px">Ens hem construït una eina que no existia: <strong>crear animacions descrivint-les amb paraules</strong>. La que tens al costat n'és un exemple, generada així.</p>
           <ul class="featlist">
-            <li>Fins ara calien <strong>coneixements de programaris específics</strong> d'animació.</li>
-            <li>Les IA generalistes (Claude, Gemini, ChatGPT) <strong>encara no ho resolen</strong>.</li>
-            <li>Ara ho pot fer <strong>qualsevol persona de l'equip</strong>.</li>
+            <li>Fins ara calia dominar <strong>programaris específics d'animació</strong> i hi havia setmanes de feina pel mig.</li>
+            <li>Les IA generalistes (Claude, Gemini, ChatGPT) <strong>encara no hi arriben</strong>.</li>
+            <li>Amb la nostra eina <strong>l'equip pot proposar i iterar molt més ràpid</strong>; el criteri estètic i de tractament hi continuen sent imprescindibles.</li>
           </ul>
         </div>
         <div class="reveal" style="--i:3">
           <video class="shot" src="assets/animacio-ia.mp4" poster="assets/animacio-poster.jpg" autoplay loop muted playsinline preload="auto" aria-label="Animació generada amb la nostra eina"></video>
-          <p class="caption">Animació generada <b>a partir d'un prompt</b> amb la nostra eina.</p>
+          <p class="caption">Animació generada <b>amb la nostra eina</b>, descrita amb un text.</p>
         </div>
       </div>
     </div>
@@ -469,21 +555,25 @@ html.js .slide.in .reveal{opacity:1;transform:none}
   </section>
 
   <!-- ░░ 12 · PROJECTES EN CURS ░░ -->
-  <section class="slide" aria-label="Projectes en què estem treballant">
-    <div class="inner">
+  <section class="slide" id="projectes" aria-label="Projectes en què estem treballant">
+    <div class="inner wide">
       <p class="eyebrow reveal">Projectes en què estem treballant</p>
       <h2 class="reveal" style="--i:1">Una petita mostra de coses ben diferents</h2>
-      <div class="cards" style="grid-template-columns:1fr 1fr;margin-top:10px">
-        <div class="card reveal" style="--i:2;padding:0;overflow:hidden">
-          <img src="assets/portal-immobiliari.png" alt="Seguiment diari d'un portal immobiliari" style="width:100%;display:block">
-          <div style="padding:clamp(20px,2.2vw,30px)">
+      <div class="cards" style="grid-template-columns:1fr 1fr;margin-top:10px;align-items:stretch">
+        <div class="card reveal" style="--i:2;padding:0;overflow:hidden;display:flex;flex-direction:column">
+          <div style="aspect-ratio:16/10;overflow:hidden;background:#f0eeea">
+            <img src="assets/portal-immobiliari.png" alt="Seguiment diari d'un portal immobiliari" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
+          </div>
+          <div style="padding:clamp(20px,2.2vw,30px);flex:1">
             <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(18px,1.7vw,22px);margin-bottom:10px;color:var(--mari)">Seguiment diari d'un portal immobiliari</h3>
             <p style="font-size:clamp(14px,1.25vw,15.5px);color:#544e74;line-height:1.55">Cada dia, a la mateixa hora, una agència immobiliària rep totes les modificacions de les últimes 24 h: quins habitatges han variat de preu i quins s'han venut. Informació per afinar l'estratègia comercial.</p>
           </div>
         </div>
-        <div class="card reveal" style="--i:3;padding:0;overflow:hidden">
-          <img src="assets/llengua-signes.jpg" alt="Aplicació de llengua de signes en català" style="width:100%;display:block">
-          <div style="padding:clamp(20px,2.2vw,30px)">
+        <div class="card reveal" style="--i:3;padding:0;overflow:hidden;display:flex;flex-direction:column">
+          <div style="aspect-ratio:16/10;overflow:hidden;background:#f0eeea">
+            <img src="assets/llengua-signes.jpg" alt="Aplicació de llengua de signes en català" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+          </div>
+          <div style="padding:clamp(20px,2.2vw,30px);flex:1">
             <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(18px,1.7vw,22px);margin-bottom:10px;color:var(--mari)">Aplicació de llengua de signes en català</h3>
             <p style="font-size:clamp(14px,1.25vw,15.5px);color:#544e74;line-height:1.55">Una eina que avui no existeix en català: estem entrenant el model per cobrir tot el vocabulari, amb detecció de mans en temps real.</p>
           </div>
@@ -507,8 +597,38 @@ html.js .slide.in .reveal{opacity:1;transform:none}
     </div>
   </section>
 
+  <!-- ░░ NOU · QUI SOM ░░ -->
+  <section class="slide" id="qui-som" aria-label="Qui som">
+    <div class="inner wide">
+      <p class="eyebrow reveal">Qui som</p>
+      <h2 class="reveal" style="--i:1">Una agència de comunicació<br>amb mirada digital</h2>
+      <div class="aboutgrid" style="margin-top:10px">
+        <div class="reveal" style="--i:2">
+          <p class="lead">Som <strong>Zeba</strong>, una agència de comunicació amb seu a Olot que treballa per a empreses, institucions i col·lectius de tot Catalunya.</p>
+          <p class="lead">La nostra feina s'articula al voltant de tres pilars: la <strong>comunicació</strong>, la <strong>producció audiovisual</strong> i els <strong>esdeveniments</strong>. A partir d'aquí imaginem, creem i comuniquem cada projecte de cap a peus.</p>
+          <div class="about-stats">
+            <div class="about-stat"><div class="n">20+</div><div class="l">anys d'experiència</div></div>
+            <div class="about-stat"><div class="n">Olot</div><div class="l">seu central</div></div>
+            <div class="about-stat"><div class="n">Catalunya</div><div class="l">àmbit de treball</div></div>
+          </div>
+        </div>
+        <aside class="about-side reveal" style="--i:3">
+          <h3>Què ens fa diferents</h3>
+          <p>A la nostra manera de treballar de sempre hi sumem <strong>intel·ligència artificial i desenvolupament amb codi</strong>. No són un servei a part: són una capa més que <strong>aporta valor a cada projecte</strong> i ens permet ajudar les empreses a assolir nous objectius.</p>
+          <p>Comunicació, criteri visual i coneixement del procés real de cada empresa, ara amb eines que abans no estaven al nostre abast.</p>
+          <div class="tags">
+            <span class="pill">Comunicació</span>
+            <span class="pill">Audiovisual</span>
+            <span class="pill">Esdeveniments</span>
+            <span class="pill">IA &amp; codi</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <!-- ░░ 14 · CONTACTE ░░ -->
-  <section class="slide contact" data-theme="dark" aria-label="Contacte">
+  <section class="slide contact" id="contacte" data-theme="dark" aria-label="Contacte">
     <svg class="wave wave--anim" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true"></svg>
     <div class="inner">
       <p class="eyebrow reveal">Contacte</p>
@@ -519,7 +639,6 @@ html.js .slide.in .reveal{opacity:1;transform:none}
           <a href="mailto:zeba@zeba.cat">zeba@zeba.cat</a>
           <span class="tel">655 53 95 44</span>
         </div>
-        <div class="reveal" style="--i:3"><img class="logo-img" src="assets/logo-zeba-white.png" alt="Zeba"></div>
       </div>
     </div>
   </section>
@@ -569,8 +688,14 @@ html.js .slide.in .reveal{opacity:1;transform:none}
         if(e.intersectionRatio>0.55){
           dots.forEach(function(d){d.classList.remove('active')});
           if(dots[idx]) dots[idx].classList.add('active');
-          if(e.target.dataset.theme==='dark'){dotsWrap.classList.add('on-dark')}
-          else{dotsWrap.classList.remove('on-dark')}
+          if(e.target.dataset.theme==='dark'){
+            dotsWrap.classList.add('on-dark');
+            if(topnav) topnav.classList.add('on-dark');
+          } else {
+            dotsWrap.classList.remove('on-dark');
+            if(topnav) topnav.classList.remove('on-dark');
+          }
+          setActiveNav(e.target);
         }
       }
     });
@@ -591,25 +716,81 @@ html.js .slide.in .reveal{opacity:1;transform:none}
     else if(ev.key==='ArrowUp'||ev.key==='PageUp'){ev.preventDefault();if(slides[current-1])slides[current-1].scrollIntoView({behavior:reduce?'auto':'smooth'})}
   });
 
-  /* Stack abans → després (slide 5) */
-  var sw=document.getElementById('stackwrap-dades');
-  if(sw){
-    var stk=document.getElementById('stack-dades');
+  /* Stacks abans → després (slides Excel→app i ERP) */
+  function setupStack(wrapId, stackId, opts){
+    var sw=document.getElementById(wrapId);
+    if(!sw) return;
+    var stk=document.getElementById(stackId);
     var toggle=function(){sw.dataset.front=(sw.dataset.front==='before')?'after':'before'};
     stk.addEventListener('click',toggle);
     stk.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
-    if(!reduce){
-      var swdone=false;
+    if(!reduce && opts && opts.auto){
+      var done=false;
       var swio=new IntersectionObserver(function(en){
         en.forEach(function(e){
-          if(e.isIntersecting && e.intersectionRatio>0.55 && !swdone){
-            swdone=true;
+          if(e.isIntersecting && e.intersectionRatio>0.55 && !done){
+            done=true;
             setTimeout(function(){if(sw.dataset.front==='before')sw.dataset.front='after'},1800);
           }
         });
       },{root:deck,threshold:[0.6]});
       swio.observe(sw.closest('.slide'));
     }
+  }
+  setupStack('stackwrap-dades','stack-dades',{auto:true});
+  setupStack('stackwrap-erp','stack-erp',{auto:false});
+
+  /* Barra de navegació */
+  var topnav=document.getElementById('topnav');
+  var navLinks=document.querySelectorAll('.topnav a.nav-link');
+  navLinks.forEach(function(a){
+    a.addEventListener('click',function(ev){
+      var id=a.getAttribute('href').slice(1);
+      var t=document.getElementById(id);
+      if(t){ev.preventDefault();t.scrollIntoView({behavior:reduce?'auto':'smooth'});topnav.classList.remove('open')}
+    });
+  });
+  /* Logo: tornar a portada */
+  var navLogo=document.querySelector('.topnav .nav-logo');
+  if(navLogo){
+    navLogo.addEventListener('click',function(ev){
+      ev.preventDefault();
+      var t=document.getElementById('portada');
+      if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth'});
+      topnav.classList.remove('open');
+    });
+  }
+  /* Burger menu */
+  var burger=document.getElementById('navBurger');
+  if(burger){
+    burger.addEventListener('click',function(){
+      var open=topnav.classList.toggle('open');
+      burger.setAttribute('aria-expanded',open?'true':'false');
+    });
+  }
+  /* Mapeig slide → secció de navegació activa */
+  var sectionMap={
+    'portada':null,
+    'que-fem':'que-fem',
+    'exemples':'exemples'
+  };
+  function setActiveNav(slideEl){
+    var id=slideEl.id;
+    // grup d'exemples: del slide #exemples fins abans de #projectes
+    var navId=id;
+    if(['exemples'].indexOf(id)===-1 && !['portada','que-fem','projectes','qui-som','contacte'].includes(id)){
+      // estem en un slide intermedi
+      // determinem grup pel índex
+      var idx=slides.indexOf(slideEl);
+      var iExemples=slides.findIndex(function(s){return s.id==='exemples'});
+      var iProjectes=slides.findIndex(function(s){return s.id==='projectes'});
+      if(iExemples>-1 && idx>=iExemples && idx<iProjectes){navId='exemples'}
+      else if(iProjectes>-1 && idx===iProjectes){navId='projectes'}
+      else navId=null;
+    }
+    navLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href')==='#'+navId);
+    });
   }
   }catch(err){
     document.documentElement.classList.remove('js');
